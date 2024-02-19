@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./global.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -10,12 +11,14 @@ import Avatar2Svg from "@/assets/avatar-2.svg";
 import BellSvg from "@/assets/bell.svg";
 import CalendarEditSvg from "@/assets/calendar-edit.svg";
 import CameraSvg from "@/assets/camera.svg";
+import ChevronDownPNG from "@/assets/chevron-down.png";
 import ChevronDownSvg from "@/assets/chevron-down.svg";
 import EditOutlineSvg from "@/assets/edit-outline.svg";
 import EnvelopeSvg from "@/assets/envelope-outline.svg";
 import FileSvg from "@/assets/file.svg";
 import HistorySvg from "@/assets/history.svg";
 import IdCardSvg from "@/assets/id-card.svg";
+import LinkOutlinePNG from "@/assets/link-outline.png";
 import LinkOutlineSvg from "@/assets/link-outline.svg";
 import LogoSvg from "@/assets/logo.svg";
 import MicrophoneSvg from "@/assets/microphone.svg";
@@ -26,6 +29,7 @@ import PhoneKeyCallSvg from "@/assets/phone-key-call.svg";
 import PhoneKeyDeleteSvg from "@/assets/phone-key-delete.svg";
 import PhoneOffSvg from "@/assets/phone-off.svg";
 import PhoneOutlineSvg from "@/assets/phone-outline.svg";
+import QuestionMarkOutlinePNG from "@/assets/question-mark-outline.png";
 import RecordSvg from "@/assets/record.svg";
 import UserCircleSvg from "@/assets/user-circle.svg";
 import WifiSvg from "@/assets/wifi.svg";
@@ -48,11 +52,12 @@ export function App() {
   const [number, setNumber] = useState("");
   const [isCalling, setIsCalling] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [user, setUser] = useState<UserProps>();
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
-  /* const [isDemo, setIsDemo] = useState(false); */
-  /* const [isActivePlan, setIsActivePlan] = useState(false); */
+  const [demoIsActive, setDemoIsActive] = useState(false);
+  const [planIsActive, setIsPlanIsActive] = useState(false);
 
   const messageSystem = {
     user: {
@@ -74,11 +79,22 @@ export function App() {
   }
 
   function handleCall() {
-    setIsCalling(true);
+    if (planIsActive && (demoIsActive || !demoIsActive)) {
+      setIsCalling(true);
+    }
   }
 
   function handleStopCall() {
     setIsCalling(false);
+  }
+
+  function handleActivatePlan() {
+    setIsLoadingButton(true);
+
+    setTimeout(() => {
+      setIsPlanIsActive(true);
+      setIsLoading(false);
+    }, 2000);
   }
 
   useEffect(() => {
@@ -117,6 +133,12 @@ export function App() {
     }, 2000);
   }, [setMessages, setUser, setIsLoading]);
 
+  useEffect(() => {
+    if (!planIsActive && (demoIsActive || !demoIsActive)) {
+      setIsLoading(true);
+    }
+  }, [demoIsActive, planIsActive, isLoading]);
+
   return (
     <div className="h-screen w-screen">
       <header className="flex h-[72px] w-full items-center justify-between bg-primary px-8 py-4">
@@ -134,7 +156,13 @@ export function App() {
 
       <main className="grid min-h-[calc(100vh-72px)] grid-cols-1 gap-4 bg-gray-300 px-2 py-4 md:grid-cols-3 md:px-6">
         <section className="flex min-h-[calc(100vh-200px)] flex-col gap-4 rounded-bl-md rounded-tl-md bg-white p-4">
-          <div className="flex flex-col items-center justify-between gap-4 rounded-md border bg-gray-100 py-4">
+          <div
+            className={`flex flex-col items-center justify-between gap-4 rounded-md border bg-gray-100 py-4 ${
+              planIsActive && (demoIsActive || !demoIsActive)
+                ? ""
+                : "opacity-80"
+            }`}
+          >
             <div className="flex flex-col items-center justify-between gap-4 ">
               {isLoading ? (
                 <>
@@ -211,7 +239,13 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex min-h-20 w-full items-center justify-between gap-3 overflow-x-hidden">
+          <div
+            className={`flex min-h-20 w-full items-center justify-between gap-3 overflow-x-hidden ${
+              planIsActive && (demoIsActive || !demoIsActive)
+                ? ""
+                : "opacity-30"
+            }`}
+          >
             <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200 md:w-full">
               Planos e valores
             </button>
@@ -226,8 +260,14 @@ export function App() {
             </button>
           </div>
 
-          <div className="flex h-full flex-col justify-between rounded-md border bg-white p-4 shadow-md shadow-gray-200">
-            <div className="flex items-center justify-between">
+          <div className="flex h-full flex-col gap-8 rounded-md border bg-white p-4 shadow-md shadow-gray-200">
+            <div
+              className={`flex items-center justify-between ${
+                planIsActive && (demoIsActive || !demoIsActive)
+                  ? ""
+                  : "opacity-50"
+              }`}
+            >
               <button className="flex w-16 flex-col items-center  justify-center gap-1 border-b-2 border-primary text-xs text-primary">
                 <img src={UserCircleSvg} alt="" />
                 Detalhes
@@ -248,56 +288,109 @@ export function App() {
                 Histórico
               </button>
             </div>
+            {planIsActive && (demoIsActive || !demoIsActive) ? (
+              <>
+                <div className="flex gap-12">
+                  <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">CPF</span>
+                    <span className="text-xs text-gray-500">
+                      099.999.999-99
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">
+                      Data nascimento
+                    </span>
+                    <span className="text-xs text-gray-500">04/09/1991</span>
+                  </div>
+                </div>
 
-            <div className="flex gap-12">
-              <div className="flex flex-col justify-between">
-                <span className="text-xs text-gray-500">CPF</span>
-                <span className="text-xs text-gray-500">099.999.999-99</span>
-              </div>
-              <div className="flex flex-col justify-between">
-                <span className="text-xs text-gray-500">Data nascimento</span>
-                <span className="text-xs text-gray-500">04/09/1991</span>
-              </div>
-            </div>
+                <div className="flex flex-col justify-between">
+                  <span className="text-xs text-gray-500">Cargo</span>
+                  <span className="text-xs text-gray-500">
+                    Diretor de Customer Experience
+                  </span>
+                </div>
 
-            <div className="flex flex-col justify-between">
-              <span className="text-xs text-gray-500">Cargo</span>
-              <span className="text-xs text-gray-500">
-                Diretor de Customer Experience
-              </span>
-            </div>
+                <div className="flex flex-col justify-between">
+                  <span className="text-xs text-gray-500">Empresa</span>
+                  <span className="text-xs text-gray-500">
+                    Big international enterprise S.A.
+                  </span>
+                </div>
 
-            <div className="flex flex-col justify-between">
-              <span className="text-xs text-gray-500">Empresa</span>
-              <span className="text-xs text-gray-500">
-                Big international enterprise S.A.
-              </span>
-            </div>
+                <div className="flex gap-12">
+                  <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">CNPJ</span>
+                    <span className="text-xs text-gray-500">
+                      99.999.999/0001-00
+                    </span>
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">
+                      Faturamento anual
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      R$ 67.459.026,00
+                    </span>
+                  </div>
+                </div>
 
-            <div className="flex gap-12">
-              <div className="flex flex-col justify-between">
-                <span className="text-xs text-gray-500">CNPJ</span>
-                <span className="text-xs text-gray-500">
-                  99.999.999/0001-00
-                </span>
-              </div>
-              <div className="flex flex-col justify-between">
-                <span className="text-xs text-gray-500">Faturamento anual</span>
-                <span className="text-xs text-gray-500">R$ 67.459.026,00</span>
-              </div>
-            </div>
+                <div className="flex flex-col justify-between">
+                  <span className="text-xs text-gray-500">
+                    N. de funcionários
+                  </span>
+                  <span className="text-xs text-gray-500">500 - 800</span>
+                </div>
 
-            <div className="flex flex-col justify-between">
-              <span className="text-xs text-gray-500">N. de funcionários</span>
-              <span className="text-xs text-gray-500">500 - 800</span>
-            </div>
+                <div className="flex flex-col justify-between">
+                  <span className="text-xs text-gray-500">Industria</span>
+                  <span className="text-xs text-gray-500">
+                    Bens de consumo: automóveis
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex h-80 w-full flex-col items-center justify-between rounded-md bg-primary px-12 py-6">
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <span className="text-center text-xl font-medium text-white">
+                      Chegou o momento de aproveitar <br />
+                      ao máximo sua experiência
+                    </span>
+                    <span className="text-xs font-light text-white">
+                      Integração rápida e fácil.
+                    </span>
+                  </div>
 
-            <div className="flex flex-col justify-between">
-              <span className="text-xs text-gray-500">Industria</span>
-              <span className="text-xs text-gray-500">
-                Bens de consumo: automóveis
-              </span>
-            </div>
+                  <button
+                    className="flex w-full items-center justify-center gap-2 rounded-md bg-white py-2 text-sm font-medium text-primary disabled:cursor-wait disabled:opacity-70"
+                    onClick={handleActivatePlan}
+                    disabled={isLoadingButton}
+                  >
+                    <img
+                      src={LinkOutlinePNG}
+                      alt=""
+                      className="h-4 w-4 "
+                      color="rgb(255 56 93 / var(--tw-text-opacity))"
+                    />
+                    Integrar CRM
+                    <img src={ChevronDownPNG} alt="" className="h-4 w-4 " />
+                  </button>
+
+                  <button className="flex items-center justify-center gap-2 rounded-md bg-transparent">
+                    <img
+                      src={QuestionMarkOutlinePNG}
+                      alt=""
+                      className="h-4 w-4 text-white"
+                    />
+                    <span className="text-xs text-white">
+                      Caso precise de ajuda
+                    </span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </section>
 
