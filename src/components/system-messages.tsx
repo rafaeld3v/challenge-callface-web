@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MessageProps } from "@/@types";
 import SystemIcon from "@/assets/avatar-callface.svg";
 import DotsVerticalSvg from "@/assets/dots-vertical.svg";
@@ -9,7 +8,7 @@ interface IProps {
 
 export function SystemMessages({ message }: IProps) {
   return (
-    <div className="m-0 mb-10">
+    <>
       <div className="flex flex-col items-end gap-2">
         <div className="flex items-center gap-2">
           <img className="h-8 w-8 rounded-full" src={SystemIcon} alt="System" />
@@ -41,6 +40,6 @@ export function SystemMessages({ message }: IProps) {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

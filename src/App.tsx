@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "./global.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -46,10 +47,12 @@ interface UserProps {
 export function App() {
   const [number, setNumber] = useState("");
   const [isCalling, setIsCalling] = useState(false);
-  /* const [isDemo, setIsDemo] = useState(false); */
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<UserProps>();
   const [messages, setMessages] = useState<MessageProps[]>([]);
+
+  /* const [isDemo, setIsDemo] = useState(false); */
+  /* const [isActivePlan, setIsActivePlan] = useState(false); */
 
   const messageSystem = {
     user: {
@@ -112,7 +115,7 @@ export function App() {
       setUser(userData);
       setIsLoading(false);
     }, 2000);
-  }, []);
+  }, [setMessages, setUser, setIsLoading]);
 
   return (
     <div className="h-screen w-screen">
@@ -130,7 +133,7 @@ export function App() {
       </header>
 
       <main className="grid min-h-[calc(100vh-72px)] grid-cols-1 gap-4 bg-gray-300 px-2 py-4 md:grid-cols-3 md:px-6">
-        <section className="flex min-h-[calc(100vh-20vh)] flex-col gap-4 rounded-bl-md rounded-tl-md bg-white p-4">
+        <section className="flex min-h-[calc(100vh-200px)] flex-col gap-4 rounded-bl-md rounded-tl-md bg-white p-4">
           <div className="flex flex-col items-center justify-between gap-4 rounded-md border bg-gray-100 py-4">
             <div className="flex flex-col items-center justify-between gap-4 ">
               {isLoading ? (
@@ -208,17 +211,17 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex w-full flex-wrap items-center justify-between gap-4">
-            <button className="h-20 w-32 rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+          <div className="flex min-h-20 w-full items-center justify-between gap-3 overflow-x-hidden">
+            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200 md:w-full">
               Planos e valores
             </button>
-            <button className="h-20 w-32 rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
               Contrato
             </button>
-            <button className="h-20 w-32 rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
               Reenviar proposta
             </button>
-            <button className="h-20 w-32 rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
               Produtos relacionados
             </button>
           </div>
@@ -298,8 +301,8 @@ export function App() {
           </div>
         </section>
 
-        <section className="min-h-[calc(100vh-20vh)] bg-white">
-          <div className="min-h-[calc(100%-10%)] p-4">
+        <section className="min-h-[calc(100vh-200px)] overflow-y-auto bg-white">
+          <div className="flex max-h-[calc(100vh-200px)] min-h-[calc(100vh-200px)] flex-col items-end justify-end gap-4 overflow-y-auto p-4">
             {isLoading ? (
               <SystemMessages message={messageSystem} />
             ) : (
@@ -313,9 +316,9 @@ export function App() {
             )}
           </div>
 
-          <div className="sticky flex h-[10%] items-center justify-between gap-2 border-t border-t-gray-300 px-4">
+          <div className="flex h-[calc(100vh-(100vh-96px))] w-full items-center justify-between gap-2 border-t border-t-gray-300 p-4">
             {isCalling && (
-              <div className="flex w-36 items-center justify-start gap-4 p-4">
+              <div className="flex w-36 items-center justify-start gap-4 px-4">
                 <button>
                   <img
                     src={MicrophoneSvg}
@@ -340,7 +343,7 @@ export function App() {
               className=" w-full rounded-md bg-gray-200 p-2 focus:border-gray-300 focus:ring-gray-300"
             />
 
-            <button>
+            <button className="min-w-8">
               <img
                 src={PapperPlaneSvg}
                 alt=""
@@ -350,7 +353,7 @@ export function App() {
           </div>
         </section>
 
-        <section className="flex min-h-[calc(100vh-20vh)] flex-col items-center justify-between rounded-br-md rounded-tr-md bg-white px-4 py-8">
+        <section className="flex min-h-[calc(100vh-200px)] flex-col items-center justify-between rounded-br-md rounded-tr-md bg-white px-4 py-8">
           <div className="flex w-full items-center justify-evenly">
             <button className="flex w-fit items-center justify-between gap-4 rounded-md p-2 text-sm shadow-md shadow-gray-200">
               <img src={MicrophoneGreenSvg} alt="" />
@@ -512,13 +515,13 @@ export function App() {
             </div>
           </div>
 
-          <div className="flex w-full items-center justify-between gap-4">
-            <button className="flex w-full items-center justify-center gap-4 rounded-md bg-primary p-2 text-white">
+          <div className="justify-centter flex w-full items-center justify-center gap-4">
+            <button className="flex w-full max-w-48 items-center justify-center gap-4 rounded-md bg-primary p-2 text-white">
               <img src={RecordSvg} alt="" />
               Gravar ligação
             </button>
 
-            <button className="flex w-full items-center justify-center gap-4 rounded-md bg-primary p-2 text-white">
+            <button className="flex w-full max-w-48 items-center justify-center gap-4 rounded-md bg-primary p-2 text-white">
               <img src={EditOutlineSvg} alt="" />
               Transcrever ligação
             </button>
