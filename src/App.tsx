@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "./global.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -56,7 +55,7 @@ export function App() {
   const [user, setUser] = useState<UserProps>();
   const [messages, setMessages] = useState<MessageProps[]>([]);
 
-  const [demoIsActive, setDemoIsActive] = useState(false);
+  const [demoIsActive] = useState(false);
   const [planIsActive, setIsPlanIsActive] = useState(false);
 
   const messageSystem = {
@@ -154,229 +153,230 @@ export function App() {
         </nav>
       </header>
 
-      <main className="grid min-h-[calc(100vh-72px)] grid-cols-1 gap-4 bg-gray-300 px-2 py-4 md:grid-cols-3 md:px-6">
-        <section className="flex min-h-[calc(100vh-200px)] flex-col gap-4 rounded-bl-md rounded-tl-md bg-white p-4">
-          <div
-            className={`flex flex-col items-center justify-between gap-4 rounded-md border bg-gray-100 py-4 ${
-              planIsActive && (demoIsActive || !demoIsActive)
-                ? ""
-                : "opacity-80"
-            }`}
-          >
-            <div className="flex flex-col items-center justify-between gap-4 ">
-              {isLoading ? (
-                <>
-                  <Skeleton width={32} height={32} circle />
-                  <Skeleton width={320} height={16} />
-                </>
-              ) : (
-                <>
-                  <img
-                    src={Avatar2Svg}
-                    alt=""
-                    className="h-8 w-8 rounded-full"
-                  />
-
-                  <strong className="text-sm text-purple-950">
-                    {user!.name}
-                  </strong>
-                </>
-              )}
-            </div>
-
-            <div className="h-[1px] w-full bg-gray-200" />
-
-            <div className="flex w-full  items-center justify-evenly">
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col items-center justify-between gap-4">
-                  <img src={IdCardSvg} alt="" className="pr-4" />
-                  <img src={PhoneOutlineSvg} alt="" className="pr-4" />
-                </div>
-
-                <div className="flex flex-col items-start justify-between gap-4">
-                  {isLoading ? (
-                    <>
-                      <Skeleton width={160} height={16} />
-                      <Skeleton width={160} height={16} />
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-sm text-purple-950">
-                        {user!.idCard}
-                      </span>
-                      <span className="text-sm text-purple-950">
-                        {user!.phone}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col items-center justify-between gap-4">
-                  <img src={EnvelopeSvg} alt="" className="pr-4" />
-                  <img src={LinkOutlineSvg} alt="" className="pr-4" />
-                </div>
-
-                <div className="flex flex-col items-start justify-between gap-4">
-                  {isLoading ? (
-                    <>
-                      <Skeleton width={160} height={16} />
-                      <Skeleton width={160} height={16} />
-                    </>
-                  ) : (
-                    <>
-                      <span className="text-sm text-purple-950">
-                        {user!.email}
-                      </span>
-                      <span className="text-sm text-purple-950">
-                        {user!.link}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className={`flex min-h-20 w-full items-center justify-between gap-3 overflow-x-hidden ${
-              planIsActive && (demoIsActive || !demoIsActive)
-                ? ""
-                : "opacity-30"
-            }`}
-          >
-            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200 md:w-full">
-              Planos e valores
-            </button>
-            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
-              Contrato
-            </button>
-            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
-              Reenviar proposta
-            </button>
-            <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
-              Produtos relacionados
-            </button>
-          </div>
-
-          <div className="flex h-full flex-col gap-8 rounded-md border bg-white p-4 shadow-md shadow-gray-200">
+      <main className="grid min-h-[calc(100vh-72px)] grid-cols-3 gap-4 bg-gray-300 px-6 py-4">
+        <section className="flex-col justify-between gap-4 rounded-bl-md rounded-tl-md bg-white p-4">
+          <div className="flex h-full flex-col justify-between gap-4">
             <div
-              className={`flex items-center justify-between ${
+              className={`flex flex-col items-center justify-between gap-4 rounded-md border bg-gray-100 py-4 ${
                 planIsActive && (demoIsActive || !demoIsActive)
                   ? ""
-                  : "opacity-50"
+                  : "opacity-80"
               }`}
             >
-              <button className="flex w-16 flex-col items-center  justify-center gap-1 border-b-2 border-primary text-xs text-primary">
-                <img src={UserCircleSvg} alt="" />
-                Detalhes
-              </button>
+              <div className="flex flex-col items-center justify-between gap-4 ">
+                {isLoading ? (
+                  <>
+                    <Skeleton width={32} height={32} circle />
+                    <Skeleton width={320} height={16} />
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={Avatar2Svg}
+                      alt=""
+                      className="h-8 w-8 rounded-full"
+                    />
 
-              <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
-                <img src={FileSvg} alt="" />
+                    <strong className="text-sm text-purple-950">
+                      {user!.name}
+                    </strong>
+                  </>
+                )}
+              </div>
+
+              <div className="h-[1px] w-full bg-gray-200" />
+
+              <div className="flex w-full  items-center justify-evenly">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col items-center justify-between gap-4">
+                    <img src={IdCardSvg} alt="" className="pr-4" />
+                    <img src={PhoneOutlineSvg} alt="" className="pr-4" />
+                  </div>
+
+                  <div className="flex flex-col items-start justify-between gap-4">
+                    {isLoading ? (
+                      <>
+                        <Skeleton width={160} height={16} />
+                        <Skeleton width={160} height={16} />
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-sm text-purple-950">
+                          {user!.idCard}
+                        </span>
+                        <span className="text-sm text-purple-950">
+                          {user!.phone}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col items-center justify-between gap-4">
+                    <img src={EnvelopeSvg} alt="" className="pr-4" />
+                    <img src={LinkOutlineSvg} alt="" className="pr-4" />
+                  </div>
+
+                  <div className="flex flex-col items-start justify-between gap-4">
+                    {isLoading ? (
+                      <>
+                        <Skeleton width={160} height={16} />
+                        <Skeleton width={160} height={16} />
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-sm text-purple-950">
+                          {user!.email}
+                        </span>
+                        <span className="text-sm text-purple-950">
+                          {user!.link}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`flex min-h-20 w-full items-center justify-between gap-3 overflow-x-hidden ${
+                planIsActive && (demoIsActive || !demoIsActive)
+                  ? ""
+                  : "opacity-30"
+              }`}
+            >
+              <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200 md:w-full">
+                Planos e valores
+              </button>
+              <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
                 Contrato
               </button>
-
-              <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
-                <img src={CalendarEditSvg} alt="" />
-                Anotações
+              <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+                Reenviar proposta
               </button>
-
-              <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
-                <img src={HistorySvg} alt="" />
-                Histórico
+              <button className="h-full w-full rounded-md border bg-white p-4 text-sm text-purple-950 shadow-md shadow-gray-200">
+                Produtos relacionados
               </button>
             </div>
-            {planIsActive && (demoIsActive || !demoIsActive) ? (
-              <>
-                <div className="flex gap-12">
+
+            <div className="flex flex-grow flex-col justify-between gap-8 rounded-md border bg-white p-4 shadow-md shadow-gray-200">
+              <div
+                className={`flex items-center justify-between ${
+                  planIsActive && (demoIsActive || !demoIsActive)
+                    ? ""
+                    : "opacity-50"
+                }`}
+              >
+                <button className="flex w-16 flex-col items-center  justify-center gap-1 border-b-2 border-primary text-xs text-primary">
+                  <img src={UserCircleSvg} alt="" />
+                  Detalhes
+                </button>
+
+                <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
+                  <img src={FileSvg} alt="" />
+                  Contrato
+                </button>
+
+                <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
+                  <img src={CalendarEditSvg} alt="" />
+                  Anotações
+                </button>
+
+                <button className="flex  w-16 flex-col items-center justify-center gap-1 text-xs">
+                  <img src={HistorySvg} alt="" />
+                  Histórico
+                </button>
+              </div>
+
+              {planIsActive && (demoIsActive || !demoIsActive) ? (
+                <div className="flex h-full flex-col items-start justify-between">
+                  <div className="flex gap-12">
+                    <div className="flex flex-col justify-between">
+                      <span className="text-xs text-gray-500">CPF</span>
+                      <span className="text-xs text-gray-500">
+                        099.999.999-99
+                      </span>
+                    </div>
+                    <div className="flex flex-col justify-between">
+                      <span className="text-xs text-gray-500">
+                        Data nascimento
+                      </span>
+                      <span className="text-xs text-gray-500">04/09/1991</span>
+                    </div>
+                  </div>
+
                   <div className="flex flex-col justify-between">
-                    <span className="text-xs text-gray-500">CPF</span>
+                    <span className="text-xs text-gray-500">Cargo</span>
                     <span className="text-xs text-gray-500">
-                      099.999.999-99
+                      Diretor de Customer Experience
                     </span>
                   </div>
+
                   <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">Empresa</span>
                     <span className="text-xs text-gray-500">
-                      Data nascimento
-                    </span>
-                    <span className="text-xs text-gray-500">04/09/1991</span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col justify-between">
-                  <span className="text-xs text-gray-500">Cargo</span>
-                  <span className="text-xs text-gray-500">
-                    Diretor de Customer Experience
-                  </span>
-                </div>
-
-                <div className="flex flex-col justify-between">
-                  <span className="text-xs text-gray-500">Empresa</span>
-                  <span className="text-xs text-gray-500">
-                    Big international enterprise S.A.
-                  </span>
-                </div>
-
-                <div className="flex gap-12">
-                  <div className="flex flex-col justify-between">
-                    <span className="text-xs text-gray-500">CNPJ</span>
-                    <span className="text-xs text-gray-500">
-                      99.999.999/0001-00
+                      Big international enterprise S.A.
                     </span>
                   </div>
+
+                  <div className="flex gap-12">
+                    <div className="flex flex-col justify-between">
+                      <span className="text-xs text-gray-500">CNPJ</span>
+                      <span className="text-xs text-gray-500">
+                        99.999.999/0001-00
+                      </span>
+                    </div>
+                    <div className="flex flex-col justify-between">
+                      <span className="text-xs text-gray-500">
+                        Faturamento anual
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        R$ 67.459.026,00
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="flex flex-col justify-between">
                     <span className="text-xs text-gray-500">
-                      Faturamento anual
+                      N. de funcionários
                     </span>
+                    <span className="text-xs text-gray-500">500 - 800</span>
+                  </div>
+
+                  <div className="flex flex-col justify-between">
+                    <span className="text-xs text-gray-500">Industria</span>
                     <span className="text-xs text-gray-500">
-                      R$ 67.459.026,00
+                      Bens de consumo: automóveis
                     </span>
                   </div>
                 </div>
-
-                <div className="flex flex-col justify-between">
-                  <span className="text-xs text-gray-500">
-                    N. de funcionários
-                  </span>
-                  <span className="text-xs text-gray-500">500 - 800</span>
-                </div>
-
-                <div className="flex flex-col justify-between">
-                  <span className="text-xs text-gray-500">Industria</span>
-                  <span className="text-xs text-gray-500">
-                    Bens de consumo: automóveis
-                  </span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex h-80 w-full flex-col items-center justify-between rounded-md bg-primary px-12 py-6">
+              ) : (
+                <div className="mx-auto flex h-full max-h-80 max-w-96 flex-col items-center justify-between rounded-md bg-primary px-8 py-6">
                   <div className="flex flex-col items-center justify-center gap-2">
                     <span className="text-center text-xl font-medium text-white">
-                      Chegou o momento de aproveitar <br />
-                      ao máximo sua experiência
+                      Chegou o momento de aproveitar ao máximo sua experiência
                     </span>
+
                     <span className="text-xs font-light text-white">
                       Integração rápida e fácil.
                     </span>
-                  </div>
 
-                  <button
-                    className="flex w-full items-center justify-center gap-2 rounded-md bg-white py-2 text-sm font-medium text-primary disabled:cursor-wait disabled:opacity-70"
-                    onClick={handleActivatePlan}
-                    disabled={isLoadingButton}
-                  >
-                    <img
-                      src={LinkOutlinePNG}
-                      alt=""
-                      className="h-4 w-4 "
-                      color="rgb(255 56 93 / var(--tw-text-opacity))"
-                    />
-                    Integrar CRM
-                    <img src={ChevronDownPNG} alt="" className="h-4 w-4 " />
-                  </button>
+                    <button
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-white py-2 text-sm font-medium text-primary disabled:cursor-wait disabled:opacity-70"
+                      onClick={handleActivatePlan}
+                      disabled={isLoadingButton}
+                    >
+                      <img
+                        src={LinkOutlinePNG}
+                        alt=""
+                        className="h-4 w-4 "
+                        color="rgb(255 56 93 / var(--tw-text-opacity))"
+                      />
+                      Integrar CRM
+                      <img src={ChevronDownPNG} alt="" className="h-4 w-4 " />
+                    </button>
+                  </div>
 
                   <button className="flex items-center justify-center gap-2 rounded-md bg-transparent">
                     <img
@@ -389,13 +389,13 @@ export function App() {
                     </span>
                   </button>
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
         </section>
 
-        <section className="min-h-[calc(100vh-200px)] overflow-y-auto bg-white">
-          <div className="flex max-h-[calc(100vh-200px)] min-h-[calc(100vh-200px)] flex-col items-end justify-end gap-4 overflow-y-auto p-4">
+        <section className="max-h-[calc(100vh-104px)] bg-white">
+          <div className="flex h-[90%] max-h-[calc(100vh-104px)] flex-col items-end justify-end gap-4 overflow-y-auto p-4">
             {isLoading ? (
               <SystemMessages message={messageSystem} />
             ) : (
@@ -409,7 +409,7 @@ export function App() {
             )}
           </div>
 
-          <div className="flex h-[calc(100vh-(100vh-96px))] w-full items-center justify-between gap-2 border-t border-t-gray-300 p-4">
+          <div className="flex h-[10%] w-full items-center justify-between gap-2 border-t border-t-gray-300 p-4">
             {isCalling && (
               <div className="flex w-36 items-center justify-start gap-4 px-4">
                 <button>
@@ -446,7 +446,7 @@ export function App() {
           </div>
         </section>
 
-        <section className="flex min-h-[calc(100vh-200px)] flex-col items-center justify-between rounded-br-md rounded-tr-md bg-white px-4 py-8">
+        <section className="flex flex-col items-center justify-between rounded-br-md rounded-tr-md bg-white px-4 py-8">
           <div className="flex w-full items-center justify-evenly">
             <button className="flex w-fit items-center justify-between gap-4 rounded-md p-2 text-sm shadow-md shadow-gray-200">
               <img src={MicrophoneGreenSvg} alt="" />
